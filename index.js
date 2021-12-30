@@ -40,6 +40,19 @@ class Ball {
         this.y += this.velY;
 
     }
+    col(){
+        for(let j = 0; j < balls.length; j++){
+            if (!(this === balls[j])){
+                const dx = this.x - balls[j].x;
+                const dy = this.x - balls[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy );
+                if (distance < this.size + balls[j].size){
+                    balls[j].color = this.color =  `rgb(` + random(0, 255) + `,` + random(0, 255) + `,` + random(0, 255) + `)`;
+
+                }
+            }
+        }
+    }
 }
 let balls = [];
 while (balls.length < 25) {
@@ -56,9 +69,12 @@ while (balls.length < 25) {
 }
 
 function display() {
+    ctx.fillStyle = `rgba(0,0,0,.25)`;
+    ctx.fillRect(0,0,width,height);
     for (let i = 0; i < balls.length; i++) {
         balls[i].draw();
         balls[i].move();
+        balls[i].col();
     }
     requestAnimationFrame(display);
 }
